@@ -4,6 +4,7 @@
         "*.tcc": "c",
         "compare": "c",
         "numeric": "c",
-        "cmath": "c"
+        "cmath": "c",
+        "6step.h": "c"
     }
 }

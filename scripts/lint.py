@@ -20,7 +20,11 @@ STRICT_CHECKS = [
 ]
 
 # Define checks to be excluded
-EXCLUDED_CHECKS = []
+EXCLUDED_CHECKS = [
+    "bugprone-easily-swappable-parameters",
+    "cppcoreguidelines-avoid-magic-numbers",
+    "readability-magic-numbers",
+]
 
 # Build include directories string for the clang-tidy command
 INCLUDE_DIR_STR = " -I" + " -I".join(INCLUDE_DIRS)
