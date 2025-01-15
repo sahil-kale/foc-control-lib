@@ -2,7 +2,7 @@ import os
 from util import *
 
 INCLUDE_DIRS = [
-    "c_source/inc",
+    "foc-control-lib/inc",
 ]
 
 # Add additional strict checks for clang-tidy
@@ -38,7 +38,9 @@ def run_clang_tidy(file, checks, include_dir_str):
 
 
 def main():
-    c_files = get_files_with_extensions((".c"), ["build", "test"], base_path="c_source")
+    c_files = get_files_with_extensions(
+        (".c"), ["build", "test"], base_path="foc-control-lib"
+    )
 
     # Convert the list of strict checks and exclusions to a comma-separated string
     checks = ",".join(STRICT_CHECKS + [f"-{check}" for check in EXCLUDED_CHECKS])

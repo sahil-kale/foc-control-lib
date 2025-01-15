@@ -1,9 +1,9 @@
 import os
 import argparse
 
-TESTS_EXE_NAME = "c_source_tests"
+TESTS_EXE_NAME = "foc-control-lib_tests"
 
-C_SOURCE_TESTS_DIR = "c_source"
+C_SOURCE_TESTS_DIR = "foc-control-lib"
 
 
 def main(debug, clean):
