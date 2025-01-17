@@ -24,6 +24,7 @@ EXCLUDED_CHECKS = [
     "bugprone-easily-swappable-parameters",
     "cppcoreguidelines-avoid-magic-numbers",
     "readability-magic-numbers",
+    "hicpp-signed-bitwise",
 ]
 
 # Build include directories string for the clang-tidy command

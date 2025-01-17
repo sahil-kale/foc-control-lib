@@ -62,3 +62,40 @@ six_step_duty_cycles_t six_step_get_duty_cycle(float rotor_angle_rad, float spee
 
     return duty_cycles;
 }
+
+six_step_sensed_rotor_angle_from_hall_t six_step_get_rotor_angle_from_hall_sensor(bool hall_a, bool hall_b, bool hall_c) {
+    six_step_sensed_rotor_angle_from_hall_t result = {true, 0.0F};
+    const uint8_t sensed_hall_code = (hall_a << 2U) | (hall_b << 1U) | (hall_c);
+
+    if ((sensed_hall_code > 6U) || (sensed_hall_code == 0U)) {
+        result.valid = false;
+    }
+
+    if (result.valid) {
+        switch (sensed_hall_code) {
+            case 4U:
+                result.rotor_angle_rad = DEG_TO_RAD(0.0F);
+                break;
+            case 6U:
+                result.rotor_angle_rad = DEG_TO_RAD(60.0F);
+                break;
+            case 2U:
+                result.rotor_angle_rad = DEG_TO_RAD(120.0F);
+                break;
+            case 3U:
+                result.rotor_angle_rad = DEG_TO_RAD(180.0F);
+                break;
+            case 1U:
+                result.rotor_angle_rad = DEG_TO_RAD(240.0F);
+                break;
+            case 5U:
+                result.rotor_angle_rad = DEG_TO_RAD(300.0F);
+                break;
+            default:
+                result.valid = false;
+                break;
+        }
+    }
+
+    return result;
+}
