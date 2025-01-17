@@ -13,4 +13,6 @@
 #define SQRT_3 (1.73205080757F)
 #define ONE_OVER_SQRT_3 (0.57735026919F)
 
+#define IGNORE(x) (void)(x)
+
 #endif  // UTIL_H

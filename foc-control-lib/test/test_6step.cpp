@@ -9,7 +9,7 @@ TEST_GROUP(SixStep){void setup() override{}
 
                     void teardown() override{}};
 
-void check_phase_command_correct(six_step_phase_control_action_E control_action, six_step_phase_command_t phase_command,
+void check_phase_command_correct(six_step_phase_control_action_E control_action, motor_phase_command_t phase_command,
                                  float speed_cmd) {
     const float phase_duty_cycle = speed_cmd / 2.0F * 0.5F;  // -1 -> 0, 1 -> 1,
     switch (control_action) {

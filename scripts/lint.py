@@ -3,6 +3,7 @@ from util import *
 
 INCLUDE_DIRS = [
     "foc-control-lib/inc",
+    "foc-control-lib/libs/control-utils/control_utils_lib/inc",
 ]
 
 # Add additional strict checks for clang-tidy
