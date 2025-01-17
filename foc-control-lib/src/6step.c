@@ -30,15 +30,15 @@ uint8_t six_step_get_sector(float rotor_angle_rad) {
     rotor_angle_rad = fmodf(rotor_angle_rad, 2.0F * M_PI_FLOAT);  // Todo: investigate loop time performance of fmodf
 
     uint8_t sector = 0;
-    if (rotor_angle_rad <= DEG_TO_RAD(60)) {
+    if ((rotor_angle_rad >= DEG_TO_RAD(330.0F)) || (rotor_angle_rad < DEG_TO_RAD(30.0F))) {
         sector = 0;
-    } else if (rotor_angle_rad <= DEG_TO_RAD(120)) {
+    } else if (rotor_angle_rad < DEG_TO_RAD(90.0F)) {
         sector = 1;
-    } else if (rotor_angle_rad <= DEG_TO_RAD(180)) {
+    } else if (rotor_angle_rad < DEG_TO_RAD(150.0F)) {
         sector = 2;
-    } else if (rotor_angle_rad <= DEG_TO_RAD(240)) {
+    } else if (rotor_angle_rad < DEG_TO_RAD(210.0F)) {
         sector = 3;
-    } else if (rotor_angle_rad <= DEG_TO_RAD(300)) {
+    } else if (rotor_angle_rad < DEG_TO_RAD(270.0F)) {
         sector = 4;
     } else {
         sector = 5;
