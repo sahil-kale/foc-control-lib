@@ -110,6 +110,6 @@ TEST(SixStep, HallSenseSectorLookupCorrect) {
 
         six_step_sensed_rotor_angle_from_hall_t result = six_step_get_rotor_angle_from_hall_sensor(hall_a, hall_b, hall_c);
         CHECK_EQUAL(true, result.valid);
-        DOUBLES_EQUAL(test_angle, result.rotor_angle_rad, 0.001);
+        DOUBLES_EQUAL(test_angle, result.rotor_el_angle_rad, 0.001);
     }
 }

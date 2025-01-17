@@ -30,12 +30,17 @@ message(STATUS "Using CppUTest home: ${CPPUTEST_HOME}")
 set(CPPUTEST_INCLUDE_DIRS ${CPPUTEST_HOME}/include)
 set(CPPUTEST_LIBRARIES ${CPPUTEST_HOME}/lib)
 set(CPPUTEST_LDFLAGS CppUTest CppUTestExt)
+set(CONTROL_LIB_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../libs/control-utils/control_utils_lib)
 
-include_directories(${CPPUTEST_INCLUDE_DIRS})
+include_directories(${CPPUTEST_INCLUDE_DIRS} ${CONTROL_LIB_DIR}/inc)
 link_directories(${CPPUTEST_LIBRARIES})
 
 # get all the test sources
 file(GLOB TEST_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp)
 
 add_executable(${This} ${TEST_SOURCES})
-target_link_libraries(${This} ${CPPUTEST_LDFLAGS} MAIN_SOURCES_LIB)
+
+file(GLOB_RECURSE CONTROL_UTILS_SOURCES ${CONTROL_LIB_DIR}/src/*.c)
+add_library(CONTROL_UTILS_LIB ${CONTROL_UTILS_SOURCES})
+
+target_link_libraries(${This} ${CPPUTEST_LDFLAGS} MAIN_SOURCES_LIB CONTROL_UTILS_LIB)

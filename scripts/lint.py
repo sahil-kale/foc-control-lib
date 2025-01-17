@@ -25,10 +25,15 @@ EXCLUDED_CHECKS = [
     "cppcoreguidelines-avoid-magic-numbers",
     "readability-magic-numbers",
     "hicpp-signed-bitwise",
+    "readability-identifier-length",
 ]
 
 # Build include directories string for the clang-tidy command
 INCLUDE_DIR_STR = " -I" + " -I".join(INCLUDE_DIRS)
+
+EXCLUDED_FILES = [
+    "foc-control-lib/src/cordic_trig_generated.c",
+]
 
 
 def run_clang_tidy(file, checks, include_dir_str):
@@ -44,8 +49,11 @@ def run_clang_tidy(file, checks, include_dir_str):
 
 def main():
     c_files = get_files_with_extensions(
-        (".c"), ["build", "test"], base_path="foc-control-lib"
+        (".c"), ["build", "test", "libs"], base_path="foc-control-lib"
     )
+
+    # Remove excluded files from the list of files to check
+    c_files = [file for file in c_files if file not in EXCLUDED_FILES]
 
     # Convert the list of strict checks and exclusions to a comma-separated string
     checks = ",".join(STRICT_CHECKS + [f"-{check}" for check in EXCLUDED_CHECKS])

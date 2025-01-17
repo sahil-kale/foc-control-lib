@@ -17,26 +17,26 @@ typedef struct {
 
 typedef struct {
     bool valid;
-    float rotor_angle_rad;
+    float rotor_el_angle_rad;
 } six_step_sensed_rotor_angle_from_hall_t;
 
 /**
  * @brief Get the sector of the rotor based on the rotor angle
  *
- * @param rotor_angle_rad The rotor angle in radians.
+ * @param rotor_el_angle_rad The rotor electrical angle in radians.
  *
  * @return uint8_t The sector of the rotor
  */
-uint8_t six_step_get_sector(float rotor_angle_rad);
+uint8_t six_step_get_sector(float rotor_el_angle_rad);
 
 /**
  * @brief Get the duty cycles for the 3 phases based on the rotor angle and speed
  *
- * @param rotor_angle_rad The rotor angle in radians
+ * @param rotor_el_angle_rad The rotor electrical angle in radians
  *
  * @param speed The speed of the rotor in the range of -1.0 to 1.0
  */
-six_step_duty_cycles_t six_step_get_duty_cycle(float rotor_angle_rad, float speed);
+six_step_duty_cycles_t six_step_get_duty_cycle(float rotor_el_angle_rad, float speed);
 
 /**
  * @brief Get the sensed rotor angle based on the hall sensor inputs

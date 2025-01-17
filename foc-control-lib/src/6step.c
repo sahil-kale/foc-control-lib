@@ -26,19 +26,19 @@ static void populate_phase_command(six_step_phase_command_t *phase_command, six_
     }
 }
 
-uint8_t six_step_get_sector(float rotor_angle_rad) {
-    rotor_angle_rad = fmodf(rotor_angle_rad, 2.0F * M_PI_FLOAT);  // Todo: investigate loop time performance of fmodf
+uint8_t six_step_get_sector(float rotor_el_angle_rad) {
+    rotor_el_angle_rad = fmodf(rotor_el_angle_rad, 2.0F * M_PI_FLOAT);  // Todo: investigate loop time performance of fmodf
 
     uint8_t sector = 0;
-    if ((rotor_angle_rad >= DEG_TO_RAD(330.0F)) || (rotor_angle_rad < DEG_TO_RAD(30.0F))) {
+    if ((rotor_el_angle_rad >= DEG_TO_RAD(330.0F)) || (rotor_el_angle_rad < DEG_TO_RAD(30.0F))) {
         sector = 0;
-    } else if (rotor_angle_rad < DEG_TO_RAD(90.0F)) {
+    } else if (rotor_el_angle_rad < DEG_TO_RAD(90.0F)) {
         sector = 1;
-    } else if (rotor_angle_rad < DEG_TO_RAD(150.0F)) {
+    } else if (rotor_el_angle_rad < DEG_TO_RAD(150.0F)) {
         sector = 2;
-    } else if (rotor_angle_rad < DEG_TO_RAD(210.0F)) {
+    } else if (rotor_el_angle_rad < DEG_TO_RAD(210.0F)) {
         sector = 3;
-    } else if (rotor_angle_rad < DEG_TO_RAD(270.0F)) {
+    } else if (rotor_el_angle_rad < DEG_TO_RAD(270.0F)) {
         sector = 4;
     } else {
         sector = 5;
@@ -47,8 +47,8 @@ uint8_t six_step_get_sector(float rotor_angle_rad) {
     return sector;
 }
 
-six_step_duty_cycles_t six_step_get_duty_cycle(float rotor_angle_rad, float speed) {
-    const uint8_t sector = six_step_get_sector(rotor_angle_rad);
+six_step_duty_cycles_t six_step_get_duty_cycle(float rotor_el_angle_rad, float speed) {
+    const uint8_t sector = six_step_get_sector(rotor_el_angle_rad);
     speed = CLAMP(speed, -1.0F, 1.0F);
     const float abs_speed = ABS_MACRO(speed);
 
@@ -74,22 +74,22 @@ six_step_sensed_rotor_angle_from_hall_t six_step_get_rotor_angle_from_hall_senso
     if (result.valid) {
         switch (sensed_hall_code) {
             case 4U:
-                result.rotor_angle_rad = DEG_TO_RAD(0.0F);
+                result.rotor_el_angle_rad = DEG_TO_RAD(0.0F);
                 break;
             case 6U:
-                result.rotor_angle_rad = DEG_TO_RAD(60.0F);
+                result.rotor_el_angle_rad = DEG_TO_RAD(60.0F);
                 break;
             case 2U:
-                result.rotor_angle_rad = DEG_TO_RAD(120.0F);
+                result.rotor_el_angle_rad = DEG_TO_RAD(120.0F);
                 break;
             case 3U:
-                result.rotor_angle_rad = DEG_TO_RAD(180.0F);
+                result.rotor_el_angle_rad = DEG_TO_RAD(180.0F);
                 break;
             case 1U:
-                result.rotor_angle_rad = DEG_TO_RAD(240.0F);
+                result.rotor_el_angle_rad = DEG_TO_RAD(240.0F);
                 break;
             case 5U:
-                result.rotor_angle_rad = DEG_TO_RAD(300.0F);
+                result.rotor_el_angle_rad = DEG_TO_RAD(300.0F);
                 break;
             default:
                 result.valid = false;
