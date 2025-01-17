@@ -79,3 +79,37 @@ TEST(SixStep, SixStepSectorDutyCycleSanity) {
         check_phase_command_correct(six_step_negative_control.phase_c_action, six_step_data.phase_c, 1.0f);
     }
 }
+
+TEST(SixStep, HallSenseInvalidHallCombo) {
+    // It is impossible to have all hall sensors in the same state
+    six_step_sensed_rotor_angle_from_hall_t result = six_step_get_rotor_angle_from_hall_sensor(true, true, true);
+    CHECK_EQUAL(false, result.valid);
+    result = six_step_get_rotor_angle_from_hall_sensor(false, false, false);
+    CHECK_EQUAL(false, result.valid);
+}
+
+TEST(SixStep, HallSenseSectorLookupCorrect) {
+    for (uint8_t i = 0; i < SIX_STEP_NUM_SECTORS; i++) {
+        const float test_angle = DEG_TO_RAD(60.0f * i);
+        uint8_t hall_sense_val = 0U;
+        if ((test_angle < DEG_TO_RAD(90)) || (test_angle >= DEG_TO_RAD(270))) {
+            hall_sense_val |= (1U << 2U);
+        }
+
+        if ((test_angle >= DEG_TO_RAD(30)) && (test_angle < DEG_TO_RAD(210))) {
+            hall_sense_val |= (1U << 1U);
+        }
+
+        if ((test_angle >= DEG_TO_RAD(150)) && (test_angle < DEG_TO_RAD(330))) {
+            hall_sense_val |= (1U);
+        }
+
+        const bool hall_a = (hall_sense_val & (1U << 2U)) != 0;
+        const bool hall_b = (hall_sense_val & (1U << 1U)) != 0;
+        const bool hall_c = (hall_sense_val & (1U)) != 0;
+
+        six_step_sensed_rotor_angle_from_hall_t result = six_step_get_rotor_angle_from_hall_sensor(hall_a, hall_b, hall_c);
+        CHECK_EQUAL(true, result.valid);
+        DOUBLES_EQUAL(test_angle, result.rotor_angle_rad, 0.001);
+    }
+}
