@@ -1,0 +1,3 @@
+[submodule "foc-control-lib/libs/control-utils"]
+	path = foc-control-lib/libs/control-utils
+	url = git@github.com:sahil-kale/control-utils.git

@@ -10,4 +10,7 @@
 #define CLAMP(x, min, max) ((x) < (min) ? (min) : ((x) > (max) ? (max) : (x)))
 #define ABS_MACRO(x) ((x) < 0 ? -(x) : (x))
 
+#define SQRT_3 (1.73205080757F)
+#define ONE_OVER_SQRT_3 (0.57735026919F)
+
 #endif  // UTIL_H
