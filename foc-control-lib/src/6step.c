@@ -3,10 +3,11 @@
 #include <math.h>
 #include <stdint.h>
 
+#include "3phase_types.h"
 #include "6step_definitions.h"
 #include "util.h"
 
-static void populate_phase_command(six_step_phase_command_t *phase_command, six_step_phase_control_action_E control_action,
+static void populate_phase_command(motor_phase_command_t *phase_command, six_step_phase_control_action_E control_action,
                                    float speed_cmd) {
     const float phase_duty_cycle = speed_cmd / 2.0F * 0.5F;  // -1 -> 0, 1 -> 1,
     switch (control_action) {

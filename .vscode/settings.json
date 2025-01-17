@@ -5,6 +5,8 @@
         "compare": "c",
         "numeric": "c",
         "cmath": "c",
-        "6step.h": "c"
-    }
+        "6step.h": "c",
+        "util.h": "c"
+    },
+    "cmake.ignoreCMakeListsMissing": true
 }

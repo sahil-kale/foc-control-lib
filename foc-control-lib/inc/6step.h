@@ -2,17 +2,13 @@
 #define SIX_STEP_HPP
 #include <stdbool.h>
 
+#include "3phase_types.h"
 #include "6step_definitions.h"
 
 typedef struct {
-    bool phase_enabled;           /// True if the phase is enabled, false otherwise (High-Z)
-    float duty_cycle_multiplier;  /// 0.0 to 1.0, where 0.5 corrosponds to 0V; 0.0 is -BusV/2, 1.0 is +BusV/2
-} six_step_phase_command_t;
-
-typedef struct {
-    six_step_phase_command_t phase_a;  /// Phase A command
-    six_step_phase_command_t phase_b;  /// Phase B command
-    six_step_phase_command_t phase_c;  /// Phase C command
+    motor_phase_command_t phase_a;  /// Phase A command
+    motor_phase_command_t phase_b;  /// Phase B command
+    motor_phase_command_t phase_c;  /// Phase C command
 } six_step_duty_cycles_t;
 
 typedef struct {
