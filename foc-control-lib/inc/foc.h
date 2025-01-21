@@ -35,7 +35,7 @@ typedef struct {
 } foc_input_t;
 
 typedef struct {
-    bool valid;
+    bool valid;  /// True if the output is valid, false otherwise (all fields considered are invalid)
 
     // Motor Outputs
     motor_phase_command_t phase_a;

@@ -6,7 +6,8 @@
         "numeric": "c",
         "cmath": "c",
         "6step.h": "c",
-        "util.h": "c"
+        "util.h": "c",
+        "cordic_trig_generated.h": "c"
     },
     "cmake.ignoreCMakeListsMissing": true
 }
