@@ -59,10 +59,10 @@ foc_output_t foc_run(foc_data_t *const foc_data, foc_input_t foc_input) {
         // Max phase voltage is V_bus / sqrt(3) with sine modulation
         // divide by 2 to get the duty cycle multiplier
         // -max_phase_voltage -> 0.0f, max_phase_voltage -> 1.0f
-        const float phase_voltage_multiplier = foc_data->one_over_v_bus * SQRT_3 * 0.5f;
-        ret.phase_a.duty_cycle_multiplier = V_abc.a * phase_voltage_multiplier + 0.5f;
-        ret.phase_b.duty_cycle_multiplier = V_abc.b * phase_voltage_multiplier + 0.5f;
-        ret.phase_c.duty_cycle_multiplier = V_abc.c * phase_voltage_multiplier + 0.5f;
+        const float phase_voltage_multiplier = foc_data->one_over_v_bus * SQRT_3 * 0.5F;
+        ret.phase_a.duty_cycle_multiplier = V_abc.a * phase_voltage_multiplier + 0.5F;
+        ret.phase_b.duty_cycle_multiplier = V_abc.b * phase_voltage_multiplier + 0.5F;
+        ret.phase_c.duty_cycle_multiplier = V_abc.c * phase_voltage_multiplier + 0.5F;
 
         ret.phase_a.phase_enabled = ret.valid;
         ret.phase_b.phase_enabled = ret.valid;
