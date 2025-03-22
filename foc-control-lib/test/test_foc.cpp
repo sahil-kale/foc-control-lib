@@ -1,8 +1,5 @@
 #include "CppUTest/TestHarness.h"
-
-extern "C" {
 #include "foc.h"
-}
 
 TEST_GROUP(Foc){void setup(){}
 
@@ -108,4 +105,12 @@ TEST(Foc, ComputationalOutputs) {
     alpha_beta_t v_ab = inverse_park_transform(foc_output.v_dq, foc_input.rotor_theta_rad);
     DOUBLES_EQUAL(foc_output.v_ab.alpha, v_ab.alpha, 1e-3);
     DOUBLES_EQUAL(foc_output.v_ab.beta, v_ab.beta, 1e-3);
+}
+
+TEST(Foc, InverseSineDutyCycle) {
+    const float test_vbus = 24.0F;
+    const float one_over_vbus = 1.0F / test_vbus;
+    DOUBLES_EQUAL(1.0F, foc_convert_inverse_sine_voltages_to_duty_cycle(0.5F * test_vbus, one_over_vbus), 1e-3);
+    DOUBLES_EQUAL(0.5F, foc_convert_inverse_sine_voltages_to_duty_cycle(0.0F, one_over_vbus), 1e-3);
+    DOUBLES_EQUAL(0.0F, foc_convert_inverse_sine_voltages_to_duty_cycle(-0.5F * test_vbus, one_over_vbus), 1e-3);
 }

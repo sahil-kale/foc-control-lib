@@ -52,3 +52,4 @@ Mkfile.old
 dkms.conf
 
 foc-control-lib-venv/
+__pycache__/

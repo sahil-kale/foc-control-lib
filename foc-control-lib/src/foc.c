@@ -4,7 +4,6 @@
 
 #include "foc_transforms.h"
 #include "pid.h"
-#include "util.h"
 
 static const foc_output_t foc_default_output = {
     .valid = false,
@@ -56,13 +55,9 @@ foc_output_t foc_run(foc_data_t *const foc_data, foc_input_t foc_input) {
         // TODO: Use SVM to generate the phase commands, rather than sine
         abc_t V_abc = inverse_clarke_transform(ret.v_ab);
 
-        // Max phase voltage is V_bus / sqrt(3) with sine modulation
-        // divide by 2 to get the duty cycle multiplier
-        // -max_phase_voltage -> 0.0f, max_phase_voltage -> 1.0f
-        const float phase_voltage_multiplier = foc_data->one_over_v_bus * SQRT_3 * 0.5F;
-        ret.phase_a.duty_cycle_multiplier = V_abc.a * phase_voltage_multiplier + 0.5F;
-        ret.phase_b.duty_cycle_multiplier = V_abc.b * phase_voltage_multiplier + 0.5F;
-        ret.phase_c.duty_cycle_multiplier = V_abc.c * phase_voltage_multiplier + 0.5F;
+        ret.phase_a.duty_cycle_multiplier = foc_convert_inverse_sine_voltages_to_duty_cycle(V_abc.a, foc_data->one_over_v_bus);
+        ret.phase_b.duty_cycle_multiplier = foc_convert_inverse_sine_voltages_to_duty_cycle(V_abc.b, foc_data->one_over_v_bus);
+        ret.phase_c.duty_cycle_multiplier = foc_convert_inverse_sine_voltages_to_duty_cycle(V_abc.c, foc_data->one_over_v_bus);
 
         ret.phase_a.phase_enabled = ret.valid;
         ret.phase_b.phase_enabled = ret.valid;
@@ -70,4 +65,12 @@ foc_output_t foc_run(foc_data_t *const foc_data, foc_input_t foc_input) {
     }
 
     return ret;
+}
+
+float foc_convert_inverse_sine_voltages_to_duty_cycle(float phase_voltage, float one_over_v_bus) {
+    // Max phase voltage from inverse clarke (sine pwm) is +- 0.5Vbus
+    // A voltage of 0*Vbus is 0.5 duty cycle (corrosponding to '0V') phase voltage
+    // A voltage of 0.5*Vbus is 1.0 duty cycle (corrosponding to 'Vbus') phase voltage
+    // A voltage of -0.5*Vbus is 0.0 duty cycle (corrosponding to '-Vbus') phase voltage
+    return (phase_voltage * one_over_v_bus + 0.5F);
 }

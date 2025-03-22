@@ -1,6 +1,10 @@
 #ifndef FOC_H
 #define FOC_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "3phase_types.h"
 #include "foc_transforms.h"
 #include "pid.h"
@@ -68,5 +72,19 @@ bool foc_init(foc_data_t *const foc_data, foc_config_t const *const foc_config);
  * @return foc_output_t The FOC output structure
  */
 foc_output_t foc_run(foc_data_t *foc_data, foc_input_t foc_input);
+
+/**
+ * @brief Convert phase voltages to duty cycle
+ *
+ * @param phase_voltage Phase voltage in volts
+ * @param one_over_v_bus Inverse of the bus voltage
+ *
+ * @return Duty cycle (0.0 to 1.0)
+ */
+float foc_convert_inverse_sine_voltages_to_duty_cycle(float phase_voltage, float one_over_v_bus);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  // FOC_H
